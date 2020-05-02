@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+</head>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Abel|Aguafina+Script|Artifika|Athiti|Condiment|Dosis|Droid+Serif|Farsan|Gurajada|Josefin+Sans|Lato|Lora|Merriweather|Noto+Serif|Open+Sans+Condensed:300|Playfair+Display|Rasa|Sahitya|Share+Tech|Text+Me+One|Titillium+Web');
+
+body {
+/* 	background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%);
+	background: url(https://www.iprocuresecurity.eu/wp-content/uploads/2020/01/virus.png);
+*/
+    background: url(https://www.iprocuresecurity.eu/wp-content/uploads/2020/01/virus.png);
+	background-attachment: fixed;
+	background-size:200px 200px;
+	animation: mymove 10s infinite;
+	margin: 0;
+}
+@keyframes mymove {
+  50% {background-size: 1000px 1000px;}
+}
+
+#container{
+	background-image: linear-gradient(to top, rgba(205, 156, 242, 0.40) 0%, rgba(246, 255, 255, 0.71) 100%);
+	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
+	text-align: center;
+	border-radius: 5px;
+	margin: 3em auto;
+	background: rgba(255, 255, 255, 0.95);
+	height: 400px;
+	width: 480px;
+	padding: 1em;
+
+	position: scroll;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	top: 0;
+
+
+}
+
+#container h2 {
+	background: url(https://www.iprocuresecurity.eu/wp-content/uploads/2020/01/virus.png);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+ 	/* background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%);*/
+	font-family: 'Playfair Display', serif;
+	background-repeat: repeat;
+	background-attachment: fixed;
+	background-size:cover;
+	letter-spacing: 2px;
+	font-size: 3.5em;
+	margin: 0;
+}
+#container h3 {
+    -webkit-text-fill-color: solid;
+    -webkit-background-clip: text;
+	font-color: #000000;
+	font-family: 'Playfair Display', serif;
+	background-repeat: repeat;
+	background-attachment: fixed;
+	background-size:cover;
+	letter-spacing: 2px;
+	font-size: 1.25em;
+	margin: 0;
+}
+#container p {
+	font-family: 'Farsan', cursive;
+	margin: 3px 0 1.5em 0;
+	font-size: 1.3em;
+	color: #7d7d7d;
+}
+
+#container input {
+    background: url(https://www.iprocuresecurity.eu/wp-content/uploads/2020/01/virus.png);
+	width: 250px;
+	display: inline-block;
+	text-align: center;
+	border-radius: 7px;
+	background: #D9E2ED;
+	padding: 1em 2em;
+	outline: none;
+	transition: 0.3s linear;
+	border: 1mm ridge rgba(151, 176, 244, .6);
+}
+::placeholder{color: #999;}
+#container input:focus {background: rgba(100, 100, 333, 0.10);}
+
+#container button {
+\*	background-image: linear-gradient(to left, rgba(0,0,0, 0.75) 0%, rgba(178,178,178, 0.86) 100%);*\
+	box-shadow: #df91fb;
+	font-family: 'Farsan', sans-serif;
+	padding: 0.5em 1.5em;
+	margin: 2.3em 0 0 0;
+	border-radius: 7px;
+	-webkit-background-clip: text;
+	font-size: 0.9em;
+	cursor: pointer;
+	color: #000000;
+	outline: none;
+    border: 1mm ridge rgba(151, 176, 244, .6);
+	transition: 0.3s linear;
+
+}
+#container button:hover{transform: translatey(2px);}
+#container button:active{transform: translatey(5px);}
+</style>
+<body>
+ <section class="section">
+   <!-- <section class="hero is-primary">-->
+   <div id="container">
+        <div class="hero-body">
+            <!--hero-body-->
+                <h2 >
+                    What's the situation here?
+                </h2>
+ <br>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <!--control is-expanded-->
+                        {{ form.name }}
+ <br>
+                        <button type="submit" >
+                        <!--button is-info-->
+                             <h3>Add State</h3>
+                        </button>
+                    </form>
+ <br>
+ <br>
+ <br>
+ <h2>Corona Status in {{country_status.country}}</h2>
+
+ </div>
+ </div>
+ </section>
+<br>
+ <div class="container">
+<section class="section">
+<center>
+ <br>
+ <br>
+<div id="piechart" style="width: 800px; height: 500px;"></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['bar']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['CaseType', 'No of People affected'],
+  ['Total Cases', {{ country_status.confirmed_cases }}],
+  ['Active Cases', {{ country_status.active_cases }}],
+  ['Recovered Cases', {{ country_status.recovered_cases }}],
+  ['Deaths', {{ country_status.death_cases }}],
+]);
+      var options = {
+          chart: {
+            subtitle: 'Different Cases Summary',
+          }
+        };
+  var chart = new google.charts.Bar(document.getElementById('piechart'));
+  chart.draw(data,google.charts.Bar.convertOptions(options));
+  //chart.draw(data);
+}
+</script>
+</center>
+</section>
+</div>>
+</body>
+</html>
