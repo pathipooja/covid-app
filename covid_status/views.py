@@ -1,18 +1,20 @@
 from django.shortcuts import render
-import requests
+from requests import get
 from .models import Country
 from .forms import CountryForm
+
+
 def index(request):
-    #url='https://api.covid19api.com/live/country/{}'
-    url='http://covid19-india-adhikansh.herokuapp.com/state/{}'
+    # url='https://api.covid19api.com/live/country/{}'
+    url = 'http://covid19-india-adhikansh.herokuapp.com/state/{}'
 
     if request.method == 'POST':
         form = CountryForm(request.POST)
-        a=form['name'].value()
+        a = form['name'].value()
         print(a)
-        #form.save()
-        r = requests.get(url.format(a))
-        if (r.status_code == 200):
+        # form.save()
+        r = get(url.format(a))
+        if r.status_code == 200:
             r = r.json()
         # print(r.text)
         country_status = {
@@ -44,7 +46,6 @@ def index(request):
     context={'each_country':each_country,'form':form}
     '''
 
-
     form = CountryForm()
-    context={'form':form}
-    return render(request,'covid_status/covid_status.html',context)
+    context = {'form': form}
+    return render(request, 'covid_status/covid_status.html', context)
