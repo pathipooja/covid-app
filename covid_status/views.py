@@ -10,7 +10,7 @@ def index(request):
         form = CountryForm(request.POST)
         a=form['name'].value()
         print(a)
-        form.save()
+        #form.save()
         r = requests.get(url.format(a))
         if (r.status_code == 200):
             r = r.json()
