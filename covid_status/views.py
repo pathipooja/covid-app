@@ -11,22 +11,23 @@ def index(request):
     if request.method == 'POST':
         form = CountryForm(request.POST)
         a = form['name'].value()
-        print(a)
+        #print(a)
         # form.save()
-        r = get(url.format(a))
+        r =get(url.format(a))
+        print(r.json())
         if r.status_code == 200:
             r = r.json()
         # print(r.text)
-        country_status = {
-            'country': a,
-            'confirmed_cases': r['data'][0]['total'],
-            'death_cases': r['data'][0]['death'],
-            'recovered_cases': r['data'][0]['cured'],
-            'active_cases': r['data'][0]['confirmed'],
-        }
-        print(country_status)
-        context = {'country_status': country_status, 'form': form}
-        return render(request, 'covid_status/covid_status.html', context)
+            country_status = {
+                'country': a,
+                'confirmed_cases': r['data'][0]['total'],
+                'death_cases': r['data'][0]['death'],
+                'recovered_cases': r['data'][0]['cured'],
+                'active_cases': r['data'][0]['confirmed'],
+            }
+            print(country_status)
+            context = {'country_status': country_status, 'form': form}
+            return render(request, 'covid_status/covid_status.html', context)
 
     '''countries=Country.objects.all()
     each_country=[]
