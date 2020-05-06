@@ -14,7 +14,6 @@ def index(request):
         #print(a)
         # form.save()
         r =get(url.format(a))
-        print(r.json())
         if r.status_code == 200:
             r = r.json()
         # print(r.text)
