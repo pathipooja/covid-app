@@ -1,7 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<script>
+window.onload = function () {
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "dark2",
+	title:{
+		text: "Covid Statistics"
+	},
+	axisY: {
+		title: "No of people affected"
+	},
+	data: [{
+		type: "column",
+		dataPoints: [
+			{ y: {{ country_status.confirmed_cases }}, label: "Total cases" },
+			{ y: {{ country_status.active_cases }},  label: "Active cases" },
+			{ y: {{ country_status.recovered_cases }},  label: "Recovered cases" },
+			{ y: {{ country_status.death_cases }},  label: "Deaths" }
+		]
+	}]
+});
+chart.render();
+}
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -9,6 +32,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
 </head>
+
 <style>
 @import url('https://fonts.googleapis.com/css?family=Abel|Aguafina+Script|Artifika|Athiti|Condiment|Dosis|Droid+Serif|Farsan|Gurajada|Josefin+Sans|Lato|Lora|Merriweather|Noto+Serif|Open+Sans+Condensed:300|Playfair+Display|Rasa|Sahitya|Share+Tech|Text+Me+One|Titillium+Web');
 
@@ -26,7 +50,7 @@ body {
   50% {background-size: 1000px 1000px;}
 }
 
-#container{
+.container{
 	background-image: linear-gradient(to top, rgba(205, 156, 242, 0.40) 0%, rgba(246, 255, 255, 0.71) 100%);
 	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
 	text-align: center;
@@ -36,17 +60,29 @@ body {
 	height: 400px;
 	width: 480px;
 	padding: 1em;
-
 	position: scroll;
 	bottom: 0;
 	right: 0;
 	left: 0;
 	top: 0;
-
-
 }
-
-#container h2 {
+.container1{
+	background-image: linear-gradient(to top, rgba(205, 156, 242, 0.40) 0%, rgba(246, 255, 255, 0.71) 100%);
+	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
+	text-align: center;
+	border-radius: 5px;
+	margin: 3em auto;
+	background: rgba(255, 255, 255, 0.95);
+	height: 200px;
+	width: 480px;
+	padding: 1em;
+	position: scroll;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	top: 0;
+}
+.container h2 {
 	background: url(https://www.iprocuresecurity.eu/wp-content/uploads/2020/01/virus.png);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
@@ -59,7 +95,7 @@ body {
 	font-size: 3.5em;
 	margin: 0;
 }
-#container h3 {
+.container h3 {
     -webkit-text-fill-color: solid;
     -webkit-background-clip: text;
 	font-color: #000000;
@@ -71,14 +107,14 @@ body {
 	font-size: 1.25em;
 	margin: 0;
 }
-#container p {
+ p {
 	font-family: 'Farsan', cursive;
 	margin: 3px 0 1.5em 0;
 	font-size: 1.3em;
 	color: #7d7d7d;
 }
 
-#container input {
+.container input {
     background: url(https://www.iprocuresecurity.eu/wp-content/uploads/2020/01/virus.png);
 	width: 250px;
 	display: inline-block;
@@ -91,9 +127,9 @@ body {
 	border: 1mm ridge rgba(151, 176, 244, .6);
 }
 ::placeholder{color: #999;}
-#container input:focus {background: rgba(100, 100, 333, 0.10);}
+.container input:focus {background: rgba(100, 100, 333, 0.10);}
 
-#container button {
+.container button {
 \*	background-image: linear-gradient(to left, rgba(0,0,0, 0.75) 0%, rgba(178,178,178, 0.86) 100%);*\
 	box-shadow: #df91fb;
 	font-family: 'Farsan', sans-serif;
@@ -107,28 +143,23 @@ body {
 	outline: none;
     border: 1mm ridge rgba(151, 176, 244, .6);
 	transition: 0.3s linear;
-
 }
-#container button:hover{transform: translatey(2px);}
-#container button:active{transform: translatey(5px);}
+.container button:hover{transform: translatey(2px);}
+.container button:active{transform: translatey(5px);}
 </style>
 <body>
  <section class="section">
-   <!-- <section class="hero is-primary">-->
-   <div id="container">
+   <div class="container">
         <div class="hero-body">
-            <!--hero-body-->
                 <h2 >
                     What's the situation here?
                 </h2>
  <br>
                     <form method="POST">
                         {% csrf_token %}
-                        <!--control is-expanded-->
                         {{ form.name }}
  <br>
                         <button type="submit" >
-                        <!--button is-info-->
                              <h3>Add State</h3>
                         </button>
                     </form>
@@ -136,43 +167,33 @@ body {
  <br>
  <br>
  <h2>Corona Status in {{country_status.country}}</h2>
-
  </div>
  </div>
  </section>
 <br>
- <div class="container">
-<section class="section">
-<center>
- <br>
- <br>
-<div id="piechart" style="width: 800px; height: 500px;"></div>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-// Load google charts
-google.charts.load('current', {'packages':['bar']});
-google.charts.setOnLoadCallback(drawChart);
-
-function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-  ['CaseType', 'No of People affected'],
-  ['Total Cases', {{ country_status.confirmed_cases }}],
-  ['Active Cases', {{ country_status.active_cases }}],
-  ['Recovered Cases', {{ country_status.recovered_cases }}],
-  ['Deaths', {{ country_status.death_cases }}],
-]);
-      var options = {
-          chart: {
-            subtitle: 'Different Cases Summary',
-          }
-        };
-  var chart = new google.charts.Bar(document.getElementById('piechart'));
-  chart.draw(data,google.charts.Bar.convertOptions(options));
-  //chart.draw(data);
-}
-</script>
-</center>
+ <section class="section">
+        <div class="container1">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="subtitle">Active Cases: {{ country_status.active_cases }}</span>
+                                        <br>
+                                        <span class="subtitle">Death Cases: {{ country_status.death_cases }}</span>
+                                        <br>
+                                        <span class="subtitle">Recovered Cases: {{ country_status.recovered_cases }}</span>
+                                        <br>
+                                        <span class="subtitle">Total Cases: {{ country_status.confirmed_cases }}</span>
+                                        <br>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+        </div>
 </section>
-</div>>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 </html>
