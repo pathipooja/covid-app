@@ -11,7 +11,7 @@ def index(request):
     if request.method == 'POST':
         form = CountryForm(request.POST)
         a = form['name'].value()
-        #print(a)
+        #data = request.POST.get('name')
         # form.save()
         r =get(url.format(a))
         if r.status_code == 200:
