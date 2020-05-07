@@ -13,8 +13,6 @@ def index(request):
         if form.is_valid():
             a = form.cleaned_data['name']
         print(a)
-        # data = request.POST.get('name')
-        form.save()
         r = get(url.format(a))
         if r.status_code == 200:
             r = r.json()
@@ -28,7 +26,6 @@ def index(request):
             print(country_status)
             context = {'country_status': country_status, 'form': form}
             return render(request, 'covid_status/covid_status.html', context)
-    else:
         country_status = {
             'country': " ",
             'confirmed_cases': 0,
