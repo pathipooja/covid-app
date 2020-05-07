@@ -32,6 +32,7 @@ def index(request):
             return render(request, 'covid_status/covid_status.html', context)
 
     form = CountryForm()
+    countries = Country.objects.all()
     obj = Country.objects.filter().latest('id')
     print(obj)
     context = {'form': form}
