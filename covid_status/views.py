@@ -10,13 +10,16 @@ def index(request):
 
     if request.method == 'POST':
         form = CountryForm(request.POST)
-        a = form['name'].value()
-        #data = request.POST.get('name')
+        if form.is_valid():
+            a = form.cleaned_data['name']
+        print(a)
+        # data = request.POST.get('name')
         # form.save()
-        r =get(url.format(a))
+        r = get(url.format(a))
         if r.status_code == 200:
+            form.save()
             r = r.json()
-        # print(r.text)
+            # print(r.text)
             country_status = {
                 'country': a,
                 'confirmed_cases': r['data'][0]['total'],
@@ -28,24 +31,8 @@ def index(request):
             context = {'country_status': country_status, 'form': form}
             return render(request, 'covid_status/covid_status.html', context)
 
-    '''countries=Country.objects.all()
-    each_country=[]
-    for country in countries:
-
-        r=requests.get(url.format(country)).json()
-        #print(r.text)
-        country_status={
-            'country' :country.name,
-            'confirmed_cases':r['data'][0]['total'],
-            'death_cases': r['data'][0]['death'],
-            'recovered_cases':r['data'][0]['cured'],
-            'active_cases': r['data'][0]['confirmed'],
-        }
-        each_country.append(country_status)
-    print(each_country)
-    context={'each_country':each_country,'form':form}
-    '''
-
     form = CountryForm()
+    obj = Country.objects.filter().latest('id')
+    print(obj)
     context = {'form': form}
     return render(request, 'covid_status/covid_status.html', context)
