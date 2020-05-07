@@ -14,11 +14,10 @@ def index(request):
             a = form.cleaned_data['name']
         print(a)
         # data = request.POST.get('name')
-        # form.save()
+        form.save()
         r = get(url.format(a))
         if r.status_code == 200:
             r = r.json()
-            # print(r.text)
             country_status = {
                 'country': a,
                 'confirmed_cases': r['data'][0]['total'],
@@ -29,13 +28,14 @@ def index(request):
             print(country_status)
             context = {'country_status': country_status, 'form': form}
             return render(request, 'covid_status/covid_status.html', context)
-    country_status = {
-        'country': " ",
-        'confirmed_cases': 0,
-        'death_cases': 0,
-        'recovered_cases': 0,
-        'active_cases': 0,
-    }
-    form = CountryForm()
-    context = {'country_status': country_status, 'form': form}
-    return render(request, 'covid_status/covid_status.html', context)
+    else:
+        country_status = {
+            'country': " ",
+            'confirmed_cases': 0,
+            'death_cases': 0,
+            'recovered_cases': 0,
+            'active_cases': 0,
+        }
+        form = CountryForm()
+        context = {'country_status': country_status, 'form': form}
+        return render(request, 'covid_status/covid_status.html', context)
