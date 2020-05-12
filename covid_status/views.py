@@ -18,15 +18,16 @@ def index(request):
     i=0
     for country in countries:
         i+=1
-        r = requests.get(url.format(country)).json()
-        # if r.status_code == 200:
-        country_status = {
-            'country': country.name,
-            'confirmed_cases': r['data'][0]['total'],
-            'death_cases': r['data'][0]['death'],
-            'recovered_cases': r['data'][0]['cured'],
-            'active_cases': r['data'][0]['confirmed'],
-        }
+        r = requests.get(url.format(country))
+        if r.status_code == 200:
+            r=r.json()
+            country_status = {
+                'country': country.name,
+                'confirmed_cases': r['data'][0]['total'],
+                'death_cases': r['data'][0]['death'],
+                'recovered_cases': r['data'][0]['cured'],
+                'active_cases': r['data'][0]['confirmed'],
+            }
     if i>0:
         country_data.append(country_status)
     '''else:
