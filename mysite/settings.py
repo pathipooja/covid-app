@@ -24,7 +24,7 @@ SECRET_KEY = 'k2y@^lm=1p1+^cuez!9=cfg_ek9-@4$ewq6e#c*x=zrt=g$&)+'
 DEBUG = True
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com/', '#']
+ALLOWED_HOSTS = ['127.0.0.1', 'pathipooja.pythonanywhere.com',]
 
 # Application definition
 
