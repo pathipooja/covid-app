@@ -28,7 +28,7 @@ def index(request):
                 'recovered_cases': r['data'][0]['cured'],
                 'active_cases': r['data'][0]['confirmed'],
             }
-        country_data.append(country_status)
+            country_data.append(country_status)
     '''else:
             country_status = {
                 'country': " ",
