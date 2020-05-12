@@ -28,7 +28,6 @@ def index(request):
                 'recovered_cases': r['data'][0]['cured'],
                 'active_cases': r['data'][0]['confirmed'],
             }
-    if i>0:
         country_data.append(country_status)
     '''else:
             country_status = {
