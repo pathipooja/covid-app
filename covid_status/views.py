@@ -21,6 +21,8 @@ def index(request):
         i+=1
         r = requests.get(url.format(country))
         if r.status_code == 200:
+            if r.text=="Country not found":
+                continue;
             r=r.json()
             country_status = {
                 'country': country.name,
@@ -29,7 +31,8 @@ def index(request):
                 'recovered_cases': r['recovered'],
                 'active_cases': r['active'],
             }
-            country_data.append(country_status)
+
+    country_data.append(country_status)
     '''else:
             country_status = {
                 'country': " ",
