@@ -6,7 +6,8 @@ from .forms import CountryForm
 
 def index(request):
     # url='https://api.covid19api.com/live/country/{}'
-    url = 'http://covid19-india-adhikansh.herokuapp.com/state/{}'
+    #url = 'http://covid19-india-adhikansh.herokuapp.com/state/{}'
+    url= 'https://coronavirus-19-api.herokuapp.com/countries/{}'
     if request.method == 'POST':
         form = CountryForm(request.POST)
         res = form.data['name']
@@ -23,10 +24,10 @@ def index(request):
             r=r.json()
             country_status = {
                 'country': country.name,
-                'confirmed_cases': r['data'][0]['total'],
-                'death_cases': r['data'][0]['death'],
-                'recovered_cases': r['data'][0]['cured'],
-                'active_cases': r['data'][0]['confirmed'],
+                'confirmed_cases': r['cases'],
+                'death_cases': r['deaths'],
+                'recovered_cases': r['recovered'],
+                'active_cases': r['active'],
             }
             country_data.append(country_status)
     '''else:

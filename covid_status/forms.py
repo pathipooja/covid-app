@@ -6,4 +6,4 @@ class CountryForm(ModelForm):
     class Meta:
         model = Country
         fields = ['name']
-        widgets = {'name': TextInput(attrs={'class': 'input' ,'placeholder':'State Name'})}
+        widgets = {'name': TextInput(attrs={'class': 'input' ,'placeholder':'Country Name'})}
