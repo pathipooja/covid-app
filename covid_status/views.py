@@ -22,6 +22,7 @@ def index(request):
         r = requests.get(url.format(country))
         if r.status_code == 200:
             if r.text=="Country not found":
+                res="Invalid input"
                 continue;
             r=r.json()
             country_status = {

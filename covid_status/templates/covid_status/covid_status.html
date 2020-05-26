@@ -156,6 +156,11 @@ body {
  <br>
  <br>
  {%for country_status in country_data%}
+ {% if res == "Invalid input" %}
+           <script>
+               alert("Invalid input");
+           </script>
+ {% endif %}
  {% if res == "Last Search" %}
             <h2>Last Search</h2>
  {% endif %}
